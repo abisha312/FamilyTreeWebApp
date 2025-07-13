@@ -6,8 +6,8 @@ A Spring Boot-based backend service for managing and visualizing family relation
 
 ## 🖼 Preview
 
-<img src="fly5.png" alt="Family Tree Demo" width="600"/>
-
+<img src="new_fly1.png" alt="Family Tree Demo" width="600"/>
+<img src="new_fly2.png" alt="Family Tree Demo" width="600"/>
 ---
 
 ## 🚀 Features
