@@ -7,37 +7,24 @@ body {
 h1 {
   text-align: center;
   color: #2c3e50;
+  margin-bottom: 30px;
 }
 
-form {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-input, button {
+/* Bootstrap already handles form, just minor tweak */
+form input,
+form button {
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 
-button {
-  background-color: #3498db;
-  color: white;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #2980b9;
-}
-
+/* Tree wrapper */
 #tree-wrapper {
   overflow-x: auto;
   padding: 20px;
   position: relative;
 }
 
+/* Tree visual layout */
 .tree {
   text-align: center;
   padding: 20px;
@@ -49,6 +36,7 @@ button:hover {
   display: flex;
   justify-content: center;
   gap: 30px;
+  flex-wrap: wrap;
 }
 
 .tree li {
@@ -58,10 +46,7 @@ button:hover {
   padding: 20px 10px 0 10px;
 }
 
-/* Removed default line connectors from previous tree structure */
-/* .tree li::before, .tree li::after, etc. — REMOVED */
-
-/* Partner Group styling */
+/* Partner grouping for couples */
 .partner-group {
   display: flex;
   align-items: center;
@@ -77,7 +62,7 @@ button:hover {
   user-select: none;
 }
 
-/* Node (person box) */
+/* Person node */
 .node {
   background: #ffffff;
   border: 2px solid #3498db;
@@ -87,8 +72,15 @@ button:hover {
   color: #2c3e50;
   font-weight: bold;
   position: relative;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.node:hover {
+  transform: scale(1.05);
+  background-color: #eaf4ff;
 }
 
 .node button {
@@ -106,7 +98,7 @@ button:hover {
   background: #c0392b;
 }
 
-/* SVG layer for drawing lines */
+/* SVG layer for connection lines */
 #lines {
   position: absolute;
   top: 0;
@@ -115,4 +107,14 @@ button:hover {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+}
+
+/* Modal tweaks */
+.modal-content {
+  border-radius: 10px;
+}
+
+.modal-body p {
+  margin: 0 0 10px;
+  font-size: 16px;
 }

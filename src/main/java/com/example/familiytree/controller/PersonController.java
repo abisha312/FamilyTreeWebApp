@@ -28,15 +28,14 @@ public class PersonController {
         return personService.getAllAsDTO();
     }
 
-
     @PostMapping
     public ResponseEntity<Person> createPerson(@RequestBody PersonRequest request) {
-        Person created = personService.createPerson(
-                request.getPerson(),
-                request.getParentIds() != null ? request.getParentIds() : new ArrayList<>()
-        );
+        Person person = request.getPerson();
+        List<Long> parentIds = request.getParentIds() != null ? request.getParentIds() : new ArrayList<>();
+        Person created = personService.createPerson(person, parentIds);
         return ResponseEntity.ok(created);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerson(@PathVariable Long id) {

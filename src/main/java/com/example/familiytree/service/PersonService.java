@@ -48,6 +48,8 @@ public class PersonService {
                 p.getId(),
                 p.getName(),
                 p.getBirthdate(),
+                p.getGender(), // ✅ include gender
+                p.getBio(),    // ✅ include bio
                 p.getParents().stream()
                         .map(parent -> new PersonDTO.SimplePerson(parent.getId(), parent.getName()))
                         .toList()

@@ -77,12 +77,12 @@ window.addEventListener('DOMContentLoaded', function () {
       <li>
         <div class="partner-group" data-couple="${key}">
           <div class="node" data-id="${p1.id}">
-            ${p1.name} (ID: ${p1.id})<br>${formatDate(p1.birthdate)}
+            ${p1.name} (ID: ${p1.id})
             <button onclick="deletePerson(${p1.id})">Delete</button>
           </div>
           <span class="dash">—</span>
           <div class="node" data-id="${p2.id}">
-            ${p2.name} (ID: ${p2.id})<br>${formatDate(p2.birthdate)}
+            ${p2.name} (ID: ${p2.id})
             <button onclick="deletePerson(${p2.id})">Delete</button>
           </div>
         </div>
@@ -92,18 +92,20 @@ window.addEventListener('DOMContentLoaded', function () {
     `;
   }
 
+
   function renderSinglePerson(person) {
     if (renderedIds.has(person.id)) return '';
     renderedIds.add(person.id);
     return `
       <li>
         <div class="node" data-id="${person.id}">
-          ${person.name} (ID: ${person.id})<br>${formatDate(person.birthdate)}
+          ${person.name} (ID: ${person.id})
           <button onclick="deletePerson(${person.id})">Delete</button>
         </div>
       </li>
     `;
   }
+
 
   function shouldShowExpandButton(coupleKey) {
     const [id1, id2] = coupleKey.split('-').map(Number);
@@ -144,7 +146,7 @@ window.addEventListener('DOMContentLoaded', function () {
         return `
           <li>
             <div class="node" data-id="${child.id}">
-              ${child.name} (ID: ${child.id})<br>${formatDate(child.birthdate)}
+              ${child.name} (ID: ${child.id})
               <button onclick="deletePerson(${child.id})">Delete</button>
             </div>
           </li>
@@ -219,15 +221,25 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const name = document.getElementById('name').value.trim();
     const birthdate = document.getElementById('birthdate').value;
+    const gender = document.getElementById('gender').value;
+    const bio = document.getElementById('bio').value.trim();
     const parentIds = document.getElementById('parentIds').value
       .split(',')
       .map(id => parseInt(id.trim()))
       .filter(id => !isNaN(id));
 
+    const requestBody = {
+      person: { name, birthdate, gender, bio },
+      parentIds
+    };
+
+    // ✅ Log the request body before sending
+    console.log("Sending request to /api/persons:", JSON.stringify(requestBody, null, 2));
+
     const res = await fetch('http://localhost:8080/api/persons', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ person: { name, birthdate }, parentIds })
+      body: JSON.stringify(requestBody)
     });
 
     if (res.ok) {
@@ -235,9 +247,33 @@ window.addEventListener('DOMContentLoaded', function () {
       renderedIds.clear();
       loadTree();
     } else {
+      const errorText = await res.text();  // Capture backend error message
+      console.error("Failed to add person:", errorText);
       alert('Failed to add person');
     }
   });
+
+
+    document.addEventListener('click', function (e) {
+      const node = e.target.closest('.node');
+      if (node && node.dataset.id) {
+        const personId = node.dataset.id;
+        const person = personMap[personId];
+
+        if (person) {
+          const html = `
+            <strong>Name:</strong> ${person.name}<br>
+            <strong>Birthdate:</strong> ${formatDate(person.birthdate)}<br>
+            <strong>Gender:</strong> ${person.gender || 'N/A'}<br>
+            <strong>Bio:</strong> ${person.bio || 'No description'}<br>
+            <strong>ID:</strong> ${person.id}
+          `;
+          document.getElementById('personModalBody').innerHTML = html;
+          const modal = new bootstrap.Modal(document.getElementById('personModal'));
+          modal.show();
+        }
+      }
+    });
 
   loadTree();
 });

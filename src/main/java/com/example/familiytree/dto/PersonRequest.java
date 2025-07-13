@@ -1,11 +1,9 @@
 package com.example.familiytree.dto;
 
 import com.example.familiytree.model.Person;
-
 import java.util.List;
 
 public class PersonRequest {
-
     private Person person;
     private List<Long> parentIds;
 

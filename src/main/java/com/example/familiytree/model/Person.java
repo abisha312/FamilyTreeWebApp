@@ -28,6 +28,13 @@ public class Person {
     @Temporal(TemporalType.DATE)
     private Date birthdate;
 
+    // ✅ New fields
+    @Column(length = 20)
+    private String gender;
+
+    @Column(length = 1000)
+    private String bio;
+
     @ManyToMany
     @JoinTable(
             name = "person_parents",
@@ -39,7 +46,7 @@ public class Person {
     @ManyToMany(mappedBy = "parents")
     private List<Person> children = new ArrayList<>();
 
-    // Getters and setters
+    // --- Getters and Setters ---
 
     public Long getId() { return id; }
 
@@ -52,6 +59,14 @@ public class Person {
     public Date getBirthdate() { return birthdate; }
 
     public void setBirthdate(Date birthdate) { this.birthdate = birthdate; }
+
+    public String getGender() { return gender; }
+
+    public void setGender(String gender) { this.gender = gender; }
+
+    public String getBio() { return bio; }
+
+    public void setBio(String bio) { this.bio = bio; }
 
     public List<Person> getParents() { return parents; }
 
