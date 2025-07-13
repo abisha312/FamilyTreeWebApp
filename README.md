@@ -1,6 +1,6 @@
 # 🌳 Family Tree Backend
 
-A Spring Boot-based backend service for managing and visualizing family relationships. This API powers a dynamic frontend interface that allows users to create, expand, and explore complex family trees.
+A Spring Boot-based backend service for managing and visualizing family relationships. This API powers a dynamic frontend interface that allows users to create, expand, and explore complex family trees with enriched member details.
 
 ---
 
@@ -8,6 +8,7 @@ A Spring Boot-based backend service for managing and visualizing family relation
 
 <img src="new_fly1.png" alt="Family Tree Demo" width="600"/>
 <img src="new_fly2.png" alt="Family Tree Demo" width="600"/>
+
 ---
 
 ## 🚀 Features
@@ -16,6 +17,8 @@ A Spring Boot-based backend service for managing and visualizing family relation
 - ✅ Parent-child linkage logic  
 - ✅ Auto-expand relationships  
 - ✅ Filter to show only root nodes initially  
+- ✅ Add `gender` and `bio` for each person  
+- ✅ Clean popup form for adding members  
 - ✅ RESTful endpoints using DTOs and layered architecture  
 
 ---
@@ -53,7 +56,8 @@ src/
     └── resources/
         ├── static/
         │   ├── index.html
-        │   └── script.js
+        │   ├── script.js
+        │   └── style.css
         └── application.properties
 ```
 
@@ -88,6 +92,17 @@ Open:
 |--------|--------------------|-------------------------|
 | GET    | /api/persons       | Get all persons         |
 | POST   | /api/person        | Add a new person        |
+
+---
+
+## 🧑‍💼 Person Model Includes
+
+- `id`  
+- `name`  
+- `gender`  
+- `bio`  
+- `parentIds`  
+- `children` (auto-managed)
 
 ---
 
